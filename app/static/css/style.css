@@ -1,0 +1,318 @@
+:root {
+    --spy-dark: #1a1a1a;
+    --spy-accent: #00ff00;
+    --spy-text: #e0e0e0;
+    --spy-card: #2a2a2a;
+    --spy-highlight: #3a3a3a;
+}
+
+body {
+    background-color: var(--spy-dark);
+    color: var(--spy-text);
+    font-family: 'Special Elite', cursive;
+    background-image: 
+        radial-gradient(circle at 50% 50%, rgba(0, 255, 0, 0.1) 0%, transparent 50%),
+        repeating-linear-gradient(45deg, rgba(0, 255, 0, 0.05) 0px, rgba(0, 255, 0, 0.05) 2px, transparent 2px, transparent 10px);
+}
+
+.container {
+    max-width: 800px;
+}
+
+.card {
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.2);
+    background-color: var(--spy-card);
+    border: 1px solid var(--spy-accent);
+    position: relative;
+    overflow: hidden;
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 2px;
+    background-color: var(--spy-accent);
+    animation: scan 4s linear infinite;
+}
+
+@keyframes scan {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+.result-box {
+    background-color: var(--spy-highlight);
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 20px;
+    border: 1px solid var(--spy-accent);
+    font-family: 'Courier New', monospace;
+}
+
+.error-message {
+    color: #ff4444;
+    margin-top: 10px;
+    border-left: 3px solid #ff4444;
+    padding-left: 10px;
+}
+
+.cipher-info {
+    background-color: var(--spy-highlight);
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 20px;
+    border: 1px solid var(--spy-accent);
+    position: relative;
+}
+
+.cipher-info::after {
+    content: 'TOP SECRET';
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    color: var(--spy-accent);
+    font-size: 0.8em;
+    opacity: 0.7;
+    transform: rotate(5deg);
+}
+
+.fun-fact {
+    background-color: rgba(0, 255, 0, 0.1);
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 10px;
+    border: 1px dashed var(--spy-accent);
+}
+
+.example {
+    background-color: rgba(0, 255, 0, 0.05);
+    border-radius: 10px;
+    padding: 10px;
+    margin-top: 10px;
+    font-family: 'Courier New', monospace;
+}
+
+.btn {
+    border-radius: 25px;
+    padding: 10px 30px;
+    font-size: 1.1em;
+    transition: all 0.3s;
+    background: linear-gradient(45deg, var(--spy-dark), var(--spy-highlight));
+    border: 1px solid var(--spy-accent);
+    color: var(--spy-accent);
+    text-shadow: 0 0 5px var(--spy-accent);
+}
+
+.btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px var(--spy-accent);
+}
+
+.btn-primary {
+    background: linear-gradient(45deg, #004400, #006600);
+}
+
+.cipher-select {
+    background-color: var(--spy-highlight);
+    color: var(--spy-text);
+    border: 1px solid var(--spy-accent);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.cipher-select:hover {
+    background-color: var(--spy-card);
+    box-shadow: 0 0 10px var(--spy-accent);
+}
+
+.cipher-select option {
+    background-color: var(--spy-dark);
+    color: var(--spy-text);
+}
+
+.title-emoji {
+    font-size: 2.5em;
+    margin-right: 10px;
+    text-shadow: 0 0 10px var(--spy-accent);
+}
+
+.form-control {
+    background-color: var(--spy-highlight);
+    border: 1px solid var(--spy-accent);
+    color: #ffffff;
+    font-family: 'Courier New', monospace;
+}
+
+.form-control:focus {
+    background-color: var(--spy-highlight);
+    border-color: var(--spy-accent);
+    box-shadow: 0 0 10px var(--spy-accent);
+    color: #ffffff;
+}
+
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.form-label {
+    color: var(--spy-accent);
+    text-shadow: 0 0 5px var(--spy-accent);
+}
+
+.classified-stamp {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-30deg);
+    font-size: 8em;
+    opacity: 0.03;
+    color: var(--spy-accent);
+    pointer-events: none;
+    font-family: 'Special Elite', cursive;
+    white-space: nowrap;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.animate-fade {
+    animation: fadeIn 0.5s;
+}
+
+.secret-header {
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    color: var(--spy-accent);
+    text-shadow: 0 0 10px var(--spy-accent);
+}
+
+.coordinates {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.8em;
+    color: var(--spy-accent);
+    opacity: 0.5;
+}
+
+.typewriter-text {
+    display: inline-block;
+    overflow: hidden;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    margin-right: 2px;
+}
+
+.result-text {
+    opacity: 0;
+}
+
+.typing {
+    opacity: 1;
+}
+
+.learning-mode {
+    background-color: rgba(0, 255, 0, 0.05);
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 15px;
+    border: 2px dashed var(--spy-accent);
+}
+
+.learning-step {
+    background-color: var(--spy-highlight);
+    border-radius: 8px;
+    padding: 12px;
+    margin: 10px 0;
+    border-left: 4px solid var(--spy-accent);
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: all 0.5s ease;
+}
+
+.learning-step.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.practice-challenge {
+    background-color: rgba(0, 255, 0, 0.1);
+    border-radius: 10px;
+    padding: 15px;
+    margin-top: 15px;
+    border: 2px solid var(--spy-accent);
+    position: relative;
+}
+
+.practice-challenge::before {
+    content: '🎯 Practice Mission';
+    position: absolute;
+    top: -12px;
+    left: 20px;
+    background-color: var(--spy-dark);
+    padding: 0 10px;
+    font-size: 0.9em;
+    color: var(--spy-accent);
+}
+
+.hint-button {
+    background: none;
+    border: 1px dashed var(--spy-accent);
+    color: var(--spy-accent);
+    padding: 5px 15px;
+    border-radius: 15px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.hint-button:hover {
+    background-color: rgba(0, 255, 0, 0.1);
+    border-style: solid;
+}
+
+.success-stamp {
+    position: absolute;
+    top: 50%;
+    right: 20px;
+    transform: translateY(-50%) rotate(15deg);
+    font-size: 3em;
+    opacity: 0;
+    transition: all 0.5s ease;
+}
+
+.success-stamp.visible {
+    opacity: 1;
+}
+
+.learning-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: var(--spy-card);
+    border: 2px solid var(--spy-accent);
+    color: var(--spy-accent);
+    padding: 8px 20px;
+    border-radius: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    z-index: 1000;
+}
+
+.learning-toggle:hover {
+    background-color: var(--spy-accent);
+    color: var(--spy-dark);
+    box-shadow: 0 0 15px var(--spy-accent);
+}
+
+.learning-toggle.active {
+    background-color: var(--spy-accent);
+    color: var(--spy-dark);
+} 

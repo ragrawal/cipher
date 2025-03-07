@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secret Agent Academy 🕵️‍♂️</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+    <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet">
+    <link href="{{ url_for('static', path='css/style.css') }}" rel="stylesheet">
+</head>
+<body>
+    <button class="learning-toggle" id="learningToggle">
+        👨‍🏫 Learning Mode
+    </button>
+
+    <div class="container py-5">
+        <h1 class="text-center mb-4 animate__animated animate__bounceIn secret-header">
+            <span class="title-emoji">🕵️‍♂️</span>
+            Secret Agent Academy
+            <span class="title-emoji">🔍</span>
+        </h1>
+        
+        <div class="row justify-content-center">
+            <div class="col-md-10">
+                <div class="card">
+                    <div class="card-body">
+                        <div class="classified-stamp">CLASSIFIED</div>
+                        <form method="POST" action="/process">
+                            <div class="mb-4">
+                                <label for="algorithm" class="form-label h5">Select Mission Protocol 🎯</label>
+                                <select class="form-select cipher-select" id="algorithm" name="algorithm" required>
+                                    {% for algo, info in algorithms %}
+                                    <option value="{{ algo }}" {% if selected_algorithm == algo %}selected{% endif %}>
+                                        {{ info.title }}
+                                    </option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            {% for algo, info in algorithms %}
+                            <div class="cipher-info mb-3 {% if not selected_algorithm or selected_algorithm != algo %}d-none{% endif %}" 
+                                 id="info-{{ algo }}">
+                                <h5>{{ info.title }}</h5>
+                                <p>{{ info.description }}</p>
+                                <div class="fun-fact">
+                                    <strong>Intelligence Report! 🌟</strong> {{ info.fun_fact }}
+                                </div>
+                                <div class="example">
+                                    <strong>Mission Example! 👉</strong> {{ info.example }}
+                                </div>
+                                
+                                <div class="learning-mode d-none" id="learning-{{ algo }}">
+                                    <h6>🎓 Learning Steps:</h6>
+                                    <div class="learning-step">1. First, we look at each letter in your message...</div>
+                                    <div class="learning-step">2. For each letter, we find its position in the alphabet...</div>
+                                    <div class="learning-step">3. Then, we apply our secret formula...</div>
+                                    <div class="learning-step">4. Finally, we convert back to letters!</div>
+                                    
+                                    <div class="practice-challenge mt-4">
+                                        <h6>🌟 Practice Challenge:</h6>
+                                        <p>Try to decode this message: <strong id="practice-message">HELLO</strong></p>
+                                        <input type="text" class="form-control mb-2" id="practice-answer" placeholder="Type your answer...">
+                                        <button class="hint-button" id="showHint">Need a hint? 💡</button>
+                                        <div class="success-stamp">✨</div>
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                            
+                            <div class="mb-4">
+                                <label for="message" class="form-label h5">Classified Message 📝</label>
+                                <textarea class="form-control" id="message" name="message" rows="3" required 
+                                    placeholder="Enter your classified message...">{{ original_message or "" }}</textarea>
+                            </div>
+                            
+                            <div class="d-grid gap-2 d-md-flex justify-content-md-center">
+                                <button type="submit" name="action" value="encrypt" 
+                                    class="btn btn-primary me-md-2 animate__animated animate__pulse">
+                                    🔒 Encrypt Message
+                                </button>
+                                <button type="submit" name="action" value="decrypt" 
+                                    class="btn btn-secondary animate__animated animate__pulse">
+                                    🔓 Decrypt Message
+                                </button>
+                            </div>
+                        </form>
+
+                        {% if result %}
+                        <div class="result-box animate-fade">
+                            <h5>Mission {{ action | title }}ion Complete:</h5>
+                            <div class="mb-0 h4">
+                                <span class="typewriter-text"></span>
+                                <span class="result-text">{{ result }}</span>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% if error %}
+                        <div class="error-message animate-fade">
+                            <strong>Mission Alert! 🚨</strong> {{ error }}
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="coordinates">
+        <span id="coordinates">COORDINATES: --° --' --"N, --° --' --"E</span>
+    </div>
+
+    <audio id="typeSound" preload="auto">
+        <source src="data:audio/mp3;base64,SUQzBAAAAAAAI1RTU0UAAAAPAAADTGF2ZjU4Ljc2LjEwMAAAAAAAAAAAAAAA//tQwAAAAAAAAAAAAAAAAAAAAAAASW5mbwAAAA8AAAASAAAZIAAGBgYGDQ0NDQ0UFBQUFBsbGxsbIiIiIiIpKSkpKTAwMDAwNzc3Nzc+Pj4+PkVFRUVFTExMTExTU1NTU1paWlpaYWFhYWFoaGhoaG9vb29vdnZ2dnZ9fX19fYSEhISEi4uLi4uSkpKSkpmZmZmZoKCgoKCnp6enp66urq6utbW1tbW8vLy8vMPDw8PDysrKysrR0dHR0djY2NjY////AAAAAExhdmM1OC4xMwAAAAAAAAAAAAAAACQDgAAAAAAAABkgVFVd6AAAAAAAAAAAAAAAAAAAAAAA//sQxAADwAABpAAAACAAADSAAAAETEFNRTMuMTAwVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVX/+xDECgPAAAGkAAAAIAAANIAAAARVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV" type="audio/mp3">
+    </audio>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ url_for('static', path='js/main.js') }}"></script>
+</body>
+</html> 
